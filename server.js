@@ -17,88 +17,42 @@ const fs = require("fs");
 //   });
 
 init();
+
 function init() {
     inquirer
-    .prompt({
-        name: "action",
-        type: "rawlist",
+    .prompt([
+        {
+        type: "list",
+        name: "task",
         message: "What you would like to do?",
         choices: [
                   "Add employee", 
                   "View all employees", 
                   "Update employee role", 
                   "Exit Program"
-                 ] 
-            //choices: ["Add employee", "Remove employee", "View all employees", "View all employees by department", "View all employees by manager", "Update employee role", "Update employee department", "Update employee manager", "Exit Program"]
-    })
-    .then(function(answer) {
-        switch (answer.action) {
-        case "Add employee":
-          addEmployee();
-          break;
-        case "View all employees":
-          viewallEmployees();
-          break;
-        case "Update employee role":
-          updateEmployeerole();
-          break;
-        case "Exit Program":
-          console.log("Thank for using the app! Goodbye!");
-          break;
+                ]
         }
-      });
-} // end function
-
-
-    //
-    // .then(ans => {
+    ])
+    .then(ans => {
                                 
-    //     if (ans.task == "Add employee") {
-            
-    //         addEmployee();
-                        
-    //     }
-        // else if (ans.task == "Remove employee") {
-   
-        //     //removeEmployees();
-        //     console.log("Remove employee");
-        // }
-        // else if (ans.task == "View all employees") {
+        if (ans.task == "Add employee") {
+            addEmployee();
+        }
+        else if (ans.task == "View all employees") {
            
-        //     viewallEmployees();
-            
-        // }
-        // else if (ans.task == "View all employees by department") {
-           
-        //     //viewallEmployeesbydepartment();
-        //     console.log("View all employees by department");
-        // }
-        // else if (ans.task == "View all employees by manager") {
-           
-        //     //viewallEmployeesbymanager();
-        //     console.log("View all employees by manager");
-        // }
-        // else if (ans.task == "Update employee role") {
+            viewallEmployees();
+        }
+        else if (ans.task == "Update employee role") {
        
-        //     updateEmployeerole();
+            updateEmployeerole();
         
-        // }
-        // else if (ans.task == "Update employee department") {
-       
-        //     //updateEmployeedepartment();
-        //     console.log("Update employee department");
-        // }
-        // else if (ans.task == "Update employee manager") {
-       
-        //     //biditemPrompts();
-        //     console.log("Update employee manager");
-        // }
-        // else if (ans.task == "Exit Program") {
+        }
+        else if (ans.task == "Exit Program") {
             
-        //     console.log("Thank for using the app! Goodbye!");
-        // }
-    
-    //}) // end prompt/then
+            console.log("Thank for using the app! Goodbye!");
+        }
+    }) // end prompt/then
+} // end function
 
 
 
@@ -132,8 +86,8 @@ function addEmployee(){
                 validate: validateName
             },
             {
+                type: "list",
                 name: "action1",
-                type: "rawlist",
                 message: "What is the employee's role?",
                 choices: [
                         "Sales Manager", 
@@ -141,11 +95,11 @@ function addEmployee(){
                         "Accountant", 
                         "Lawyer", 
                         "Project Manager"
-                        ] 
+                        ]
             },
             {
+                type: "list",
                 name: "action2",
-                type: "rawlist",
                 message: "What is the employee's department?",
                 choices: [
                         "Sales",  
@@ -153,45 +107,43 @@ function addEmployee(){
                         "Finance", 
                         "Legal", 
                         "PMO"
-                        ] 
-            }
+                        ]
+            }  
         ])
         .then(function(answer) {
-            switch (answer.action1) {
-            case "Sales Manager":
+
+            if (answer.action1 == "Sales Manager") {
                 roleId = 1;
-                break;
-            case "Software Engineer":
+            }
+            else if (answer.action1 == "Software Engineer") {
                 roleId = 2;
-                break;
-            case "Accountant":
+            }
+            else if (answer.action1 == "Accountant") {
                 roleId = 3;
-                break;
-            case "Lawyer":
+            }
+            else if (answer.action1 == "Lawyer") {
                 roleId = 4;
-                break;
-            case "Project Manager":
+            }
+            else if (answer.action1 == "Project Manager") {
                 roleId = 5;
-                break;
+            }
+        
+            if (answer.action2 == "Sales") {
+                departmentId = 1;
+            }
+            else if (answer.action2 == "IT") {
+                departmentId = 2;
+            }
+            else if (answer.action2 == "Finanace") {
+                departmentId = 3;
+            }
+            else if (answer.action2 == "Legal") {
+                departmentId = 4;
+            }
+            else if (answer.action2 == "PMO") {
+                departmentId = 5;
             }
             
-            switch (answer.action2) {
-                case "Sales":
-                    departmentId = 1;
-                    break;
-                case "IT":
-                    departmentId = 2;
-                    break;
-                case "Finance":
-                    departmentId = 3;
-                    break;
-                case "Legal":
-                    departmentId = 4;
-                    break;
-                case "PMO":
-                    departmentId = 5;
-                    break;
-                }
                        
             const firstName = answer.firstname;
             const lastName = answer.lastname;
@@ -205,41 +157,42 @@ function addEmployee(){
             console.log(lastName);
 
 
-           //To get the manager id: loop the employeeTable to find the first name and last name 
-           //of the manager. The manager is an employee, so we get the employee id. when the names match)
-            connection.query("SELECT * FROM employeeTable", function(err, res) {
-                if (err) throw err;
-                for (var i = 0; i < employeeTables.length; i++) {
-                    if (res[i].first_name == managerFirst && res[i].last_name == managerLast){
-                        managerId =  res[i].id;
-                    }                    
-                }
-            });
+        //    //To get the manager id: loop the employeeTable to find the first name and last name 
+        //    //of the manager. The manager is an employee, so we get the employee id. when the names match)
+        //     connection.query("SELECT * FROM employeeTable", function(err, res) {
+        //         if (err) throw err;
+        //         for (var i = 0; i < employeeTables.length; i++) {
+        //             if (res[i].first_name == managerFirst && res[i].last_name == managerLast){
+        //                 managerId =  res[i].id;
+        //             }                    
+        //         }
+        //     });
 
-           //To insert the employee info in employeeTable
-           connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (firstName, lastName, roleId, managerId)`, function(err, res) {
-               if (err) throw err;
-               console.log(res);
-               afterConnection();
-            });
+        //    //To insert the employee info in employeeTable
+        //    connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (firstName, lastName, roleId, managerId)`, function(err, res) {
+        //        if (err) throw err;
+        //        console.log(res);
+        //        afterConnection();
+        //     });
 
-            //To verify if employee was added to table - displays employee's info entered
-            function afterConnection() {
-                connection.query("SELECT * FROM employeeTable", function(err, res) {
-                    if (err) throw err;
-                    for (var i = 0; i < employeeTables.length; i++) {
-                        if (res[i].first_name == firstName && res[i].last_name == lastName){
-                            console.log("-----------------------===========------------------------------------------");
-                            console.log("---------New employee" + firstName + lastName + "added to database----------");
-                            console.log("------------------------------=========-------------------------------------");
+        //     //To verify if employee was added to table - displays employee's info entered
+        //     function afterConnection() {
+        //         connection.query("SELECT * FROM employeeTable", function(err, res) {
+        //             if (err) throw err;
+        //             for (var i = 0; i < employeeTables.length; i++) {
+        //                 if (res[i].first_name == firstName && res[i].last_name == lastName){
+        //                     console.log("-----------------------------------------------------------------");
+        //                     console.log("---------New employee" + firstName + lastName + "added to database----------");
+        //                     console.log("-------------------------------------------------------------------");
 
-                        }        
-                    };
-                    //connection.end();  Ask TA if this is needed here @@@@@@@
-                });
-            }
+        //                 }        
+        //             };
+        //             //connection.end();  Ask TA if this is needed here @@@@@@@
+        //         });
+        //     }
+        init();
         })  // end of inquire and then *****
-    init();
+    
 }   
     
 
@@ -248,37 +201,37 @@ function viewallEmployees(){
     // return this.connection.query("SELECT employeeTable.id, employeeTable.first_name, employeeTable.last_name ,employeeTable.role_id, employeeTable.manager_id, roleTable.title, roleTable.salary, depTable.departmentName AS depTable, roleTable.salary, CONCAT(manager.id) AS manager FROM employeeTable LEFT JOIN roleTable ON employeeTable.role_id = role_id LEFT JOIN depTable ON role.departmentId = depTable.id LEFT JOIN employeeTable ON manager_id = employeeTAble.manager_id;")
   
     
-    connection.query("SELECT * FROM employeeTable", function(err, res) {
-        if (err) throw err;
-        for (var i = 0; i < employeeTable.length; i++) {
+    // connection.query("SELECT * FROM employeeTable", function(err, res) {
+    //     if (err) throw err;
+    //     for (var i = 0; i < employeeTable.length; i++) {
             
-            connection.query("SELECT * FROM roleTable", function(err, res) {
-                if (err) throw err;
-                for (var i = 0; i < roleTable.length; i++) {
-                    if (res[i].role_id == res[i].id){
-                        employeeTitle = res[i].title;
-                        employeeSalary = res[i].salary;
-                        employeedepartamentId = res[i].departmentId; 
-                    }
-                }
-            });
-            connection.query("SELECT * FROM depTable", function(err, res) {
-                if (err) throw err;
-                for (var i = 0; i < depTable.length; i++) {
-                    if (employeedepartmentId == res[i].id){
-                        employeedepartamentName = res[i].departmentName; 
-                    }
-                }
-            });
+    //         connection.query("SELECT * FROM roleTable", function(err, res) {
+    //             if (err) throw err;
+    //             for (var i = 0; i < roleTable.length; i++) {
+    //                 if (res[i].role_id == res[i].id){
+    //                     employeeTitle = res[i].title;
+    //                     employeeSalary = res[i].salary;
+    //                     employeedepartamentId = res[i].departmentId; 
+    //                 }
+    //             }
+    //         });
+    //         connection.query("SELECT * FROM depTable", function(err, res) {
+    //             if (err) throw err;
+    //             for (var i = 0; i < depTable.length; i++) {
+    //                 if (employeedepartmentId == res[i].id){
+    //                     employeedepartamentName = res[i].departmentName; 
+    //                 }
+    //             }
+    //         });
             
-            //To write all the employee information on screen 
-            //tenho que completar com DataTransferItemList, salary department
-            for (var i = 0; i < employeeTables.length; i++) {
-                console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast + " | " + employeeTitle + " | " + employeeSalary + " | " + employeedepartamentName);
-            }
+    //         //To write all the employee information on screen 
+    //         //tenho que completar com DataTransferItemList, salary department
+    //         for (var i = 0; i < employeeTables.length; i++) {
+    //             console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast + " | " + employeeTitle + " | " + employeeSalary + " | " + employeedepartamentName);
+    //         }
             
-            //connection.end();  Ask TA if this is needed here @@@@@@@
-       }
+    //         //connection.end();  Ask TA if this is needed here @@@@@@@
+    //    }
      
     
     
