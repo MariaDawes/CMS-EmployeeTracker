@@ -250,42 +250,35 @@ function viewallEmployees(){
     
     connection.query("SELECT * FROM employeeTable", function(err, res) {
         if (err) throw err;
-        for (var i = 0; i < employeeTables.length; i++) {
+        for (var i = 0; i < employeeTable.length; i++) {
             
             connection.query("SELECT * FROM roleTable", function(err, res) {
                 if (err) throw err;
-                for (var i = 0; i < employeeTables.length; i++) {
+                for (var i = 0; i < roleTable.length; i++) {
                     if (res[i].role_id == res[i].id){
                         employeeTitle = res[i].title;
                         employeeSalary = res[i].salary;
                         employeedepartamentId = res[i].departmentId; 
                     }
                 }
+            });
+            connection.query("SELECT * FROM depTable", function(err, res) {
+                if (err) throw err;
+                for (var i = 0; i < depTable.length; i++) {
+                    if (employeedepartmentId == res[i].id){
+                        employeedepartamentName = res[i].departmentName; 
+                    }
+                }
+            });
             
-                    connection.query("SELECT * FROM roleTable", function(err, res) {
-                        if (err) throw err;
-                        for (var i = 0; i < employeeTables.length; i++) {
-                            if (res[i].role_id == res[i].id){
-                                employeeTitle = res[i].title;
-                                employeeSalary = res[i].salary;
-                                employeedepartamentId = res[i].departmentId; 
-                            }
-                        }
-                    });
-            
-            
-
-
-
-
             //To write all the employee information on screen 
             //tenho que completar com DataTransferItemList, salary department
             for (var i = 0; i < employeeTables.length; i++) {
-                console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
+                console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast + " | " + employeeTitle + " | " + employeeSalary + " | " + employeedepartamentName);
             }
             
             //connection.end();  Ask TA if this is needed here @@@@@@@
-       });
+       }
      
     
     
