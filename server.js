@@ -210,13 +210,11 @@ function addEmployee(){
             connection.query("SELECT * FROM employeeTable", function(err, res) {
                 if (err) throw err;
                 for (var i = 0; i < employeeTables.length; i++) {
-                    if (res[i].first_name == managerFirst && res[i].last_name == lastName){
+                    if (res[i].first_name == managerFirst && res[i].last_name == managerLast){
                         managerId =  res[i].id;
-
                     }                    
                 }
             });
-
 
            //To insert the employee info in employeeTable
            connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (firstName, lastName, roleId, managerId)`, function(err, res) {
@@ -224,25 +222,24 @@ function addEmployee(){
                console.log(res);
                afterConnection();
             });
+
+            //To verify if employee was added to table - displays employee's info entered
             function afterConnection() {
-               connection.query("SELECT * FROM employeeTable", function(err, res) {
-                 if (err) throw err;
-                 for (var i = 0; i < employeeTables.length; i++) {
+                connection.query("SELECT * FROM employeeTable", function(err, res) {
+                    if (err) throw err;
+                    for (var i = 0; i < employeeTables.length; i++) {
+                        if (res[i].first_name == firstName && res[i].last_name == lastName){
+                            console.log("-----------------------===========------------------------------------------");
+                            console.log("---------New employee" + firstName + lastName + "added to database----------");
+                            console.log("------------------------------=========-------------------------------------");
 
-                    if (res[i].first_name == firstName && res[i].last_name == managerLast){
-                        managerId =  res[i].id;
-
-                    }        
-                    console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
-                  }
-                  console.log("-------------------------------------------------");
-                  console.log("---------New employee added to database----------");
-                  console.log("-------------------------------------------------");
-                 //connection.end();  Ask TA if this is needed here @@@@@@@
-              });
+                        }        
+                    };
+                    //connection.end();  Ask TA if this is needed here @@@@@@@
+                });
             }
-            init();
         })  // end of inquire and then *****
+    init();
 }   
     
 
@@ -250,18 +247,46 @@ function viewallEmployees(){
     
     // return this.connection.query("SELECT employeeTable.id, employeeTable.first_name, employeeTable.last_name ,employeeTable.role_id, employeeTable.manager_id, roleTable.title, roleTable.salary, depTable.departmentName AS depTable, roleTable.salary, CONCAT(manager.id) AS manager FROM employeeTable LEFT JOIN roleTable ON employeeTable.role_id = role_id LEFT JOIN depTable ON role.departmentId = depTable.id LEFT JOIN employeeTable ON manager_id = employeeTAble.manager_id;")
   
-    function afterConnection() {
-        connection.query("SELECT * FROM employeeTable", function(err, res) {
-          if (err) throw err;
-          for (var i = 0; i < employeeTables.length; i++) {
-             console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
-           }
-           console.log("-------------------------------------------------");
-           console.log("---------New employee added to database----------");
-           console.log("-------------------------------------------------");
-          //connection.end();  Ask TA if this is needed here @@@@@@@
+    
+    connection.query("SELECT * FROM employeeTable", function(err, res) {
+        if (err) throw err;
+        for (var i = 0; i < employeeTables.length; i++) {
+            
+            connection.query("SELECT * FROM roleTable", function(err, res) {
+                if (err) throw err;
+                for (var i = 0; i < employeeTables.length; i++) {
+                    if (res[i].role_id == res[i].id){
+                        employeeTitle = res[i].title;
+                        employeeSalary = res[i].salary;
+                        employeedepartamentId = res[i].departmentId; 
+                    }
+                }
+            
+                    connection.query("SELECT * FROM roleTable", function(err, res) {
+                        if (err) throw err;
+                        for (var i = 0; i < employeeTables.length; i++) {
+                            if (res[i].role_id == res[i].id){
+                                employeeTitle = res[i].title;
+                                employeeSalary = res[i].salary;
+                                employeedepartamentId = res[i].departmentId; 
+                            }
+                        }
+                    });
+            
+            
+
+
+
+
+            //To write all the employee information on screen 
+            //tenho que completar com DataTransferItemList, salary department
+            for (var i = 0; i < employeeTables.length; i++) {
+                console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
+            }
+            
+            //connection.end();  Ask TA if this is needed here @@@@@@@
        });
-     }
+     
     
     
     
