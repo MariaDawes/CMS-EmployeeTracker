@@ -1,52 +1,73 @@
-//const mysql = require("mysql");
-const inquirer = require("inquirer");
+// var mysql = require("mysql");
+var inquirer = require("inquirer");
 const fs = require("fs");
 
-// const connection = mysql.createConnection({
+// var connection = mysql.createConnection({
 //     host: "localhost",
-//     port: 3030,
+//     port: 3000,
 //     user: "root",
 //     password: "Copacabana259$",
 //     database: "hrDB"
 // });
 
-// connection.connect(err => {
-//     if(err){ console.log(error)}
-//     else {
-//         init();
-//     }
-// })
+// connection.connect(function(err) {
+//     if (err) throw err;
+//     console.log("connected as id " + connection.threadId);
+//     init();
+//   });
 
 init();
 function init() {
-
     inquirer
-    .prompt([
-        {
-            type: "list",
-            name: "task",
-            message: "What you would like to do?",
-            choices: ["Add employee", "View all employees", "Update employee role", "Exit Program"] 
+    .prompt({
+        name: "action",
+        type: "rawlist",
+        message: "What you would like to do?",
+        choices: [
+                  "Add employee", 
+                  "View all employees", 
+                  "Update employee role", 
+                  "Exit Program"
+                 ] 
             //choices: ["Add employee", "Remove employee", "View all employees", "View all employees by department", "View all employees by manager", "Update employee role", "Update employee department", "Update employee manager", "Exit Program"]
+    })
+    .then(function(answer) {
+        switch (answer.action) {
+        case "Add employee":
+          addEmployee();
+          break;
+        case "View all employees":
+          viewallEmployees();
+          break;
+        case "Update employee role":
+          updateEmployeerole();
+          break;
+        case "Exit Program":
+          console.log("Thank for using the app! Goodbye!");
+          break;
         }
-    ])
-    .then(ans => {
+      });
+} // end function
+
+
+    //
+    // .then(ans => {
                                 
-        if (ans.task == "Add employee") {
+    //     if (ans.task == "Add employee") {
             
-            addEmployee();
+    //         addEmployee();
                         
-        }
+    //     }
         // else if (ans.task == "Remove employee") {
    
         //     //removeEmployees();
         //     console.log("Remove employee");
         // }
-        else if (ans.task == "View all employees") {
+        // else if (ans.task == "View all employees") {
            
-            viewallEmployees();
+        //     viewallEmployees();
             
-        }
+        // }
         // else if (ans.task == "View all employees by department") {
            
         //     //viewallEmployeesbydepartment();
@@ -57,11 +78,11 @@ function init() {
         //     //viewallEmployeesbymanager();
         //     console.log("View all employees by manager");
         // }
-        else if (ans.task == "Update employee role") {
+        // else if (ans.task == "Update employee role") {
        
-            updateEmployeerole();
+        //     updateEmployeerole();
         
-        }
+        // }
         // else if (ans.task == "Update employee department") {
        
         //     //updateEmployeedepartment();
@@ -72,97 +93,154 @@ function init() {
         //     //biditemPrompts();
         //     console.log("Update employee manager");
         // }
-        else if (ans.task == "Exit Program") {
+        // else if (ans.task == "Exit Program") {
             
-            console.log("Thank for using the app! Goodbye!");
-        }
+        //     console.log("Thank for using the app! Goodbye!");
+        // }
     
-    }) // end prompt/then
-} // end function
+    //}) // end prompt/then
+
 
 
 function addEmployee(){
 
-    inquirer
-    .prompt([
-        {
-            type: "input",
-            name: "firstname",
-            message: "What is the employee's first name?",
-            validate: validateName
-        },
-        {
-            type: "input",
-            name: "lastname",
-            message: "What is the employee's last name?",
-            validate: validateName
-        },
-        {
-            type: "list",
-            name: "role",
-            message: "What is the employee's role?",
-            choices: ["Sales Manager", "Software Engineer", "Accountant", "Lawyer", "Project Manager"] 
-        },
-        {
-            type: "list",
-            name: "dep",
-            message: "What is the employee's department?",
-            choices: ["Sales", "IT", "Finance", "Legal", "PMO"]
-        },
-        {
-            type: "input",
-            name: "manager",
-            message: "Who is the employee's manager?",
-            validate: validateName
-        }
+    //Prompts for getting new employee information
+        inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "firstname",
+                message: "What is the employee's first name?",
+                validate: validateName
+            },
+            {
+                type: "input",
+                name: "lastname",
+                message: "What is the employee's last name?",
+                validate: validateName
+            },
+            {
+                type: "input",
+                name: "managerFirstname",
+                message: "Who is the employee manager's first name?",
+                validate: validateName
+            },
+            {
+                type: "input",
+                name: "managerLastname",
+                message: "Who is the employee manager's last name?",
+                validate: validateName
+            },
+            {
+                name: "action1",
+                type: "rawlist",
+                message: "What is the employee's role?",
+                choices: [
+                        "Sales Manager", 
+                        "Software Engineer", 
+                        "Accountant", 
+                        "Lawyer", 
+                        "Project Manager"
+                        ] 
+            },
+            {
+                name: "action2",
+                type: "rawlist",
+                message: "What is the employee's department?",
+                choices: [
+                        "Sales",  
+                        "IT", 
+                        "Finance", 
+                        "Legal", 
+                        "PMO"
+                        ] 
+            }
         ])
-        .then(ans1 => {
-            
-            const firstName = ans1.firstname;
-            const lastName = ans1.lastname;
-            const manager = ans1.manager;
-            
-            // Roles ids
-            if (ans1.role == "Sales Manager") {
-                roleId = 1;  
-            }                
-            else if (ans1.role == "Software Engineer") {
+        .then(function(answer) {
+            switch (answer.action1) {
+            case "Sales Manager":
+                roleId = 1;
+                break;
+            case "Software Engineer":
                 roleId = 2;
-            }
-            else if (ans1.role == "Accountant") {
+                break;
+            case "Accountant":
                 roleId = 3;
-            }
-            else if (ans1.role == "Lawyer") {
+                break;
+            case "Lawyer":
                 roleId = 4;
-            }
-            else if (ans1.role == "Project Manager") {
+                break;
+            case "Project Manager":
                 roleId = 5;
+                break;
             }
             
+            switch (answer.action2) {
+                case "Sales":
+                    departmentId = 1;
+                    break;
+                case "IT":
+                    departmentId = 2;
+                    break;
+                case "Finance":
+                    departmentId = 3;
+                    break;
+                case "Legal":
+                    departmentId = 4;
+                    break;
+                case "PMO":
+                    departmentId = 5;
+                    break;
+                }
+                       
+            const firstName = answer.firstname;
+            const lastName = answer.lastname;
+            const managerFirst = answer.managerFirstname;
+            const managerLast = answer.managerLastname;
             console.log(roleId);
-            console.log(manager);
+            console.log(departmentId);
+            console.log(managerFirst);
+            console.log(managerLast);
             console.log(firstName);
             console.log(lastName);
 
-            // Departments id
-            if (ans1.dep == "Sales") {
-                department_id = 1;  
-            }                
-            else if (ans1.dep == "IT") {
-                department_id = 2;
-            }
-            else if (ans1.dep == "Finance") {
-                department_id = 3;
-            }
-            else if (ans1.dep == "Legal") {
-                department_id = 4;
-            }
-            else if (ans1.dep == "PMO") {
-                department_id = 5;
-            }
 
-            //I need to add this info to the employeeTable
+           //To get the manager id: loop the employeeTable to find the first name and last name 
+           //of the manager. The manager is an employee, so we get the employee id. when the names match)
+            connection.query("SELECT * FROM employeeTable", function(err, res) {
+                if (err) throw err;
+                for (var i = 0; i < employeeTables.length; i++) {
+                    if (res[i].first_name == managerFirst && res[i].last_name == lastName){
+                        managerId =  res[i].id;
 
+                    }                    
+                }
+            });
+
+
+           //To insert the employee info in employeeTable
+           connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (firstName, lastName, roleId, managerId)`, function(err, res) {
+               if (err) throw err;
+               console.log(res);
+               afterConnection();
+            });
+            function afterConnection() {
+               connection.query("SELECT * FROM employeeTable", function(err, res) {
+                 if (err) throw err;
+                 for (var i = 0; i < employeeTables.length; i++) {
+
+                    if (res[i].first_name == firstName && res[i].last_name == managerLast){
+                        managerId =  res[i].id;
+
+                    }        
+                    console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
+                  }
+                  console.log("-------------------------------------------------");
+                  console.log("---------New employee added to database----------");
+                  console.log("-------------------------------------------------");
+                 //connection.end();  Ask TA if this is needed here @@@@@@@
+              });
+            }
             init();
         })  // end of inquire and then *****
 }   
@@ -170,7 +248,26 @@ function addEmployee(){
 
 function viewallEmployees(){
     
-           // init();
+    // return this.connection.query("SELECT employeeTable.id, employeeTable.first_name, employeeTable.last_name ,employeeTable.role_id, employeeTable.manager_id, roleTable.title, roleTable.salary, depTable.departmentName AS depTable, roleTable.salary, CONCAT(manager.id) AS manager FROM employeeTable LEFT JOIN roleTable ON employeeTable.role_id = role_id LEFT JOIN depTable ON role.departmentId = depTable.id LEFT JOIN employeeTable ON manager_id = employeeTAble.manager_id;")
+  
+    function afterConnection() {
+        connection.query("SELECT * FROM employeeTable", function(err, res) {
+          if (err) throw err;
+          for (var i = 0; i < employeeTables.length; i++) {
+             console.log(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast);
+           }
+           console.log("-------------------------------------------------");
+           console.log("---------New employee added to database----------");
+           console.log("-------------------------------------------------");
+          //connection.end();  Ask TA if this is needed here @@@@@@@
+       });
+     }
+    
+    
+    
+    
+    
+    init();
 }  
 
     
@@ -202,8 +299,14 @@ function updateEmployeerole(){
             },
             {
                 type: "input",
-                name: "manager",
-                message: "Who is the employee's new manager?",
+                name: "managerFirstname",
+                message: "Who is the new manager's first name?",
+                validate: validateName
+            },
+            {
+                type: "input",
+                name: "managerLastname",
+                message: "Who is the new manager's last name?",
                 validate: validateName
             }
             ])
@@ -211,8 +314,9 @@ function updateEmployeerole(){
                 
                 const firstName = ans1.firstname;
                 const lastName = ans1.lastname;
-                const manager = ans1.manager;
-                const roleId = 0;
+                const managerFname = ans1.managerFirstname;
+                const managerLname = ans1.managerLastname;
+                var roleId = 0;
                 
                 // Roles ids
                 if (ans1.role == "Sales Manager") {
