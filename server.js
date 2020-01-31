@@ -148,20 +148,6 @@ function addEmployee() {
             const managerFirst = answer.managerFirstname;
             const managerLast = answer.managerLastname;
 
-            console.log(firstName);
-            console.log(lastName);
-            console.log(roleId);
-
-            //if (firstName == managerFirst && lastName == managerLast){
-            managerId = 1;
-            // }          
-            //To get the manager id: loop the employeeTable to find the first name and last name 
-            //of the manager. The manager is an employee, so we get the employee id. when the names match)
-            // connection.query("SELECT * FROM employeeTable", function(err, res) {
-            //     if (err) throw err;                    
-            // });
-
-
             //To insert the employee info in employeeTable
             connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`, [firstName, lastName, roleId, managerId], function (err, res) {
 
@@ -180,71 +166,43 @@ function addEmployee() {
 
 function viewallEmployees() {
 
-    var query = "SELECT * FROM employeeTable";
-        connection.query(query, function(err, res) {
+    
+        connection.query("SELECT * FROM employeeTable", function(err, res) {
+            if (err) throw err;
             for (var i = 0; i < res.length; i++) {
                 var fnStorage = res[i].first_name;
                 var lnStorage = res[i].last_name;
                 var roleidStorage = res[i].role_id;
                 console.log(fnStorage, lnStorage, roleidStorage);
                 
-                connection.query("SELECT * FROM roleTable WHERE ?",{ roleidStorage }, function (err, res) {
+                connection.query("SELECT * FROM roleTable", function (err, res) {
                     if (err) throw err;
-                    var a = 0;
-                    console.log("Role id: ", res[a].id, roleidStorage);
-                    // for (var a = 0; a < roleTable.length; a++) {
-                    //     if (res[i].role_id == res[i].id) {
-                    //         employeeTitle = res[i].title;
-                    //         employeeSalary = res[i].salary;
-                    //         employeedepartamentId = res[i].departmentId;
-                    //     }
-                    // }
+                    for (var a = 0; a < res.length; a++) {
+                        if (res[a].id == roleidStorage) {
+                            var titleStorage = res[a].title;
+                            var salaryStorage = res[a].salary;
+                            var departamentidStorage = res[a].departmentId;
+                            console.log(titleStorage, salaryStorage, departamentidStorage);
+                        }
+                    }
                 });
 
-
+                connection.query("SELECT * FROM depTable", function (err, res) {
+                    if (err) throw err;
+                    for (var b = 0; b < r.length; b++) {
+                        if (res[b].id == departamentidStorage) {
+                            var departamentnameStorage = res[b].departmentName;
+                            console.log(departamentnameStorage);
+                        }
+                    }
+                });
+                //console.log(fnStorage, lnStorage, roleidStorage, titleStorage, salaryStorage, departamentidStorage, departamentnameStorage);
                 
             }
-        
+            
         });   
-        connection.query("SELECT * FROM employeeTable WHERE ?", { id: i }, function (err, res) {
-        if (err) throw err;
-        for (var i = 1; i < employeeTable.length; i++) {
-
-
-
-        }
-
-        connection.query("SELECT * FROM roleTable", function (err, res) {
-            if (err) throw err;
-            for (var i = 0; i < roleTable.length; i++) {
-                if (res[i].role_id == res[i].id) {
-                    employeeTitle = res[i].title;
-                    employeeSalary = res[i].salary;
-                    employeedepartamentId = res[i].departmentId;
-                }
-            }
-        });
-        connection.query("SELECT * FROM depTable", function (err, res) {
-            if (err) throw err;
-            for (var i = 0; i < depTable.length; i++) {
-                if (employeedepartmentId == res[i].id) {
-                    employeedepartamentName = res[i].departmentName;
-                }
-            }
-        });
-
-        //To write all the employee information on screen 
-        //tenho que completar com DataTransferItemList, salary department
-        for (var i = 0; i < employeeTables.length; i++) {
-            console.table(res[i].first_name + " | " + res[i].last_name + " | " + res[i].role_id + " | " + res[i].manager_id + " | " + managerFirst + " | " + managerLast + " | " + employeeTitle + " | " + employeeSalary + " | " + employeedepartamentName);
-        }
-
-        //connection.end();  Ask TA if this is needed here @@@@@@@
-    }
-    });
-
-init();
-}
+        init();
+}   // end function view all employees
 
 
 function updateEmployeerole() {
