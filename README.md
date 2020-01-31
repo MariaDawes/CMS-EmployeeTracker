@@ -16,24 +16,38 @@ The software will run in any Laptop, iPad and phone.
 *  The command-line application should: add departments, roles, employees; view departments, roles, employees; update employee roles
 
 
-# Submission 
-* The URL of the GitHub repository
+## Submission 
+ The URL of the GitHub repository
 
-# Screenshots
+## Screenshots
 
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen1.png)
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen2.png)
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen3.png)
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen4.png)
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen5.png)
-![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen6.png)
-# Tests 
+
+* Screen shots for : "View all employees"
+
+![alt text](./screen2.png "Logo Title Text 2")
+This screenshot shows the result for "View all employees".  It shows all employees in teh employeeTable (first name, last name, roleid). For the first employee, I managed to get from the roleTable the Title, salary and department id. SO, I could access the role table, but I think there was a code error that prevented me to get the rest of the info. I am going to try to fix it.  
+
+![alt text](./screen3.png "Logo Title Text 3")
+Thsi screenshot shows the database table that was used as source for screen2
+
+* The screenshot shots for "Add employee option"
+
+![alt text](./screen4.png "Logo Title Text 4")
+The screenshot shot shows "Add employee option" chosen and all the prompts. At the end of the prompts for that employee it shows the fist name and last name of the employee recently placed in teh table. The info first/last name has been extracted form the database. 
+
+![alt text](./screen5.png "Logo Title Text 5")
+This screenshot shows more employees added to data base, just like screen 4.
+
+![alt text](./screen6.png "Logo Title Text 6")
+This screenshot shows the database complete with the employee added in screens 4 and 5. Check it out! The names are all there! :)
+
+## Tests 
 * tested all entries   
 
-# Author
+## Author
 Maria Dawes-Tedesc0
 
-# Contributing
+## Contributing
 Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c63ec426) for details on our code of conduct, and the process for submitting pull requests to us.
 
 # Versioning
