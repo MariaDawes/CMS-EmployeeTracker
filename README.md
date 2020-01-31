@@ -1,5 +1,5 @@
 # CMS - Employee Tracker
-Architect an application that builds a solution for managing a company's employees, to help the user organize and plan the  business. The application allows the user to view and manage the departments, roles, and employees in the company. 
+Architect an application that builds a solution for managing a company's employees, to help the user organize and plan the business. The application allows the user to view and manage the departments, roles, and employees in the company. 
 The command-line application should allow users to: 
 - add departments, roles, employees 
 - view departments, roles, employees 
@@ -13,11 +13,11 @@ Build a solution for managing a company's employees using node, inquirer, and My
 The software will run in any Laptop, iPad and phone.
 
 # Results 
-*  The command-line application should: add departments, roles, employees; view departments, roles, employees; update employee roles
+*  The command-line application should provide full access to performing inclusing, update and deletion of employees in a database. Also, it should allow slicing the data for viewing in many different ways.
 
 
 ## Submission 
- The URL of the GitHub repository
+ The URL of the GitHub repository has been added to BootCamp Spot
 
 ## Screenshots
 
@@ -45,7 +45,9 @@ Screen 3 - Above you can see the database table that was used as source for the 
 
 
 ## Tests 
-* tested all entries   
+* name validation - characters
+* prompts have been tested for functionality
+*   
 
 ## Author
 Maria Dawes-Tedesc0
@@ -57,6 +59,6 @@ Please read [CONTRIBUTING.md](https://gist.github.com/PurpleBooth/b24679402957c6
 For the versions available, see https://github.com/MariaDawes/Template-Engine/commits/master
 
 # Acknowledgement
-Thanks to Eric to help me when I was stuck.
+Thanks to Eric for helping me with my code when I was stuck.
 
 
