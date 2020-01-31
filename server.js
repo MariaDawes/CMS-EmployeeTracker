@@ -147,14 +147,13 @@ function addEmployee() {
             const lastName = answer.lastname;
             const managerFirst = answer.managerFirstname;
             const managerLast = answer.managerLastname;
+            managerId = 1;
 
             //To insert the employee info in employeeTable
-            connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id) VALUES (?,?,?,?)`, [firstName, lastName, roleId], function (err, res) {
+            connection.query(`INSERT INTO employeeTable (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`, [firstName, lastName, roleId, managerId], function (err, res) {
 
                 if (err) throw err;
-                console.log("I am here!!!!");
-                console.log(res)
-
+                
                 console.table("-----------------------------------------------------------------------------");
                 console.table("                       New employee  " + firstName + " " + lastName + "  added to database                  ");
                 console.table("-----------------------------------------------------------------------------");

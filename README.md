@@ -24,7 +24,9 @@ The software will run in any Laptop, iPad and phone.
 ![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen1.png)
 ![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen2.png)
 ![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen3.png)
-
+![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen4.png)
+![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen5.png)
+![alt tag](https://mariadawes.github.io/Updatedportfoliopage/screen6.png)
 # Tests 
 * tested all entries   
 
