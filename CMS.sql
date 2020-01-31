@@ -25,6 +25,20 @@ CREATE TABLE employeeTable (
   PRIMARY KEY (id)
 );
 
+
+-- Inserted a set of records into the table
+-- INSERT INTO employeeTable (first_name, last_name, role_id, manager_id )
+-- VALUES ("Maria", "Dawes", 1, 1);
+
+
+-- INSERT INTO employeeTable (first_name, last_name, role_id, manager_id )
+-- VALUES ("Melina", "Ustinov", 2, 2);
+
+
+
+
+
+
 -- Inserted a set of records into the table
 INSERT INTO roleTable (title, salary, departmentId)
 VALUES ("Sales Manager", 156000, 1);
@@ -60,3 +74,4 @@ VALUES ("PMO");
 
 SELECT * FROM roleTable;
 SELECT * FROM depTable;
+SELECT * FROM employeeTable;
