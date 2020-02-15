@@ -47,7 +47,7 @@ Screen 5 - This is the database table that was used as source for Screen 4"
 ## Tests 
 * name validation - characters
 * prompts have been tested for functionality
-*   
+
 
 ## Author
 Maria Dawes-Tedesc0
